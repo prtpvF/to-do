@@ -1,5 +1,5 @@
 package com.example.todo.Model;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "task")

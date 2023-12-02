@@ -1,2 +1,9 @@
-package com.example.todo.dtos;public class JwtRequest {
+package com.example.todo.dtos;
+
+import lombok.Data;
+
+@Data
+public class JwtRequest {
+    private String username;
+    private String password;
 }

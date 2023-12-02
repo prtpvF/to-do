@@ -1,9 +1,15 @@
 package com.example.todo.Model;
-import jakarta.persistence.*;
 
+
+
+
+
+
+
+
+import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Stream;
+
 
 @Entity
 @Table(name = "person")
@@ -40,6 +46,14 @@ public class Person {
         this.id = id;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -64,10 +78,11 @@ public class Person {
         this.roles = roles;
     }
 
-    public Person(int id, String username, String password, Collection<Role> roles) {
+    public Person(int id, String username, String password, String email, Collection<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.email = email;
         this.roles = roles;
     }
 
