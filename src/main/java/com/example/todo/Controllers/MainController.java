@@ -1,8 +1,21 @@
 package com.example.todo.Controllers;
 
+import com.example.todo.Model.Person;
+import com.example.todo.Services.AuthService;
+import com.example.todo.Services.PersonService;
+import com.example.todo.dtos.RegistrationPersonDto;
+import com.example.todo.dtos.UserDto;
+import com.example.todo.exceptions.AppError;
+import com.example.todo.util.JwtTokenUtils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
@@ -10,19 +23,31 @@ import java.security.Principal;
 @RestController
 @RequiredArgsConstructor
 public class MainController {
+    private final AuthService authService;
 
     @GetMapping("/unsecured")
-    public String unsecuredData(){
+    public String unsecuredData() {
         return "unsecured data";
     }
 
     @GetMapping("/secured")
-    public String securedData(){
+    public String securedData() {
         return "secured data";
     }
 
     @GetMapping("/info")
-    public String userData(Principal principal){
-        return  principal.getName();
+    public String userData(Principal principal) {
+        return principal.getName();
+    }
+
+    @GetMapping("/admin")
+    public String admin() {
+        System.out.println("вызван");
+        return "Admin data";
+    }
+
+    @PostMapping("/registration")
+    public ResponseEntity<?> createNewUser(@RequestBody RegistrationPersonDto registrationPersonDto) {
+      return authService.createNewUser(registrationPersonDto);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.todo.Controllers;
 
 import com.example.todo.Model.Person;
+import com.example.todo.Services.AuthService;
 import com.example.todo.Services.PersonService;
 import com.example.todo.dtos.JwtRequest;
 import com.example.todo.dtos.JwtResponse;
@@ -23,22 +24,14 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+
 public class AuthController {
-    private final PersonService personService;
-    private final JwtTokenUtils jwtTokenUtils;
-    private  final AuthenticationManager authenticationManager;
+    private final AuthService authService;
 
     @PostMapping("/token")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest){
-        try {
-             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-        }catch (BadCredentialsException e){
-            return  new ResponseEntity<>(new AppError(HttpStatus.UNAUTHORIZED.value(), "некорктный логин или пароль"), HttpStatus.UNAUTHORIZED);
-        }
-        UserDetails userDetails = personService.loadUserByUsername(authRequest.getUsername());
-        String token = jwtTokenUtils.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token));
+        return authService.createAuthToken(authRequest);
+
     }
 
 

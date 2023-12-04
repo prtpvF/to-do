@@ -20,10 +20,7 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @PostMapping("/registration")
-    public void register(@RequestBody Person person) {
-        personService.register(person);
-    }
+
 
 
 }
