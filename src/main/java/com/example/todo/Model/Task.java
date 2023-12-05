@@ -1,8 +1,17 @@
 package com.example.todo.Model;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "task")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,35 +22,17 @@ public class Task {
     @Column(name = "description")
     private String description;
 
-    public int getId() {
-        return id;
-    }
+    @ManyToOne()
+    @JoinColumn(name = "person_id")
+    public Person owner;
 
-    public String getName() {
-        return name;
-    }
+    @Column(name = "time_of_crate")
+    public Timestamp timeOfCreate;
+    @Column(name = "time_of_expire")
+    public Timestamp timeOfExpired;
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
-    public Task(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Task() {
-    }
 }

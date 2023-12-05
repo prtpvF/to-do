@@ -1,18 +1,9 @@
 package com.example.todo.Controllers;
 
-import com.example.todo.Model.Person;
 import com.example.todo.Services.AuthService;
-import com.example.todo.Services.PersonService;
 import com.example.todo.dtos.RegistrationPersonDto;
-import com.example.todo.dtos.UserDto;
-import com.example.todo.exceptions.AppError;
-import com.example.todo.util.JwtTokenUtils;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

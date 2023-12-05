@@ -8,7 +8,9 @@ package com.example.todo.Model;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 @Entity
@@ -34,6 +36,9 @@ public class Person {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Collection<Role> roles;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "owner")
+    private List<Task> tasks = new ArrayList<>();
 
 
 
@@ -78,6 +83,14 @@ public class Person {
         this.roles = roles;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
     public Person(int id, String username, String password, String email, Collection<Role> roles) {
         this.id = id;
         this.username = username;
@@ -88,4 +101,6 @@ public class Person {
 
     public Person() {
     }
+
+
 }
