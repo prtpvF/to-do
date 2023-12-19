@@ -7,7 +7,6 @@ export default function AddTask() {
     const [task, setTask] = useState({
         name: "",
         description: "",
-        timeOfCreate: "",
         timeOfExpired: ""
     });
 
@@ -33,7 +32,6 @@ export default function AddTask() {
         <form onSubmit={onSubmit}>
             <input type="text" name="name" value={task.name} onChange={onInputChange} placeholder="Name" />
             <input type="text" name="description" value={task.description} onChange={onInputChange} placeholder="Description" />
-            <input type="datetime-local" name="timeOfCreate" value={task.timeOfCreate} onChange={onInputChange} placeholder="Time of Creation" />
             <input type="datetime-local" name="timeOfExpired" value={task.timeOfExpired} onChange={onInputChange} placeholder="Time of Expiration" />
             <button type="submit">Submit</button>
         </form>

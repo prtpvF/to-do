@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import AddUser from "./users/AddUser";
 import Login from './pages/Login';
 import AddTask from "./tasks/AddTask";
+import ViewAllTasks from "./tasks/ViewAllTasks";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
                 <Route exact path="/adduser" element={<AddUser />} />
                 <Route exact path="/login" element={<Login />} />
                 <Route exact path="/add/task" element={<AddTask/>}/>
+                <Route exact path="/view/all/tasks" element={<ViewAllTasks/>}/>
             </Routes>
         </Router>
 
