@@ -24,7 +24,6 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-
 public class AuthController {
     private final AuthService authService;
 

@@ -1,5 +1,6 @@
 package com.example.todo.Services;
 
+import com.example.todo.Exception.ApiRequestException;
 import com.example.todo.Model.Person;
 import com.example.todo.Model.Task;
 import com.example.todo.Repository.TaskRepository;
@@ -22,13 +23,9 @@ public class TaskService {
     private final PersonService personService;
 
     public List<Task> allPersonTask(Principal principal) {
-        Optional<Person> person = Optional.of(new Person());
-        try {
-            person = personService.findByUsername(principal.getName());
-        } catch (BadCredentialsException e) {
-            log.debug("user not found");
-        }
-        return person.get().getTasks();
+        Optional<Person> person = personService.findByUsername(principal.getName());
+        List<Task> personTasks = person.get().getTasks();
+        return personTasks;
     }
 
 
@@ -40,7 +37,7 @@ public class TaskService {
         task.setOwner(person.get());
         task.setTimeOfCreate(now);
 
-        if (task.getTimeOfCreate().toInstant().isBefore(task.getTimeOfExpired().toInstant())) {
+        if (task.getTimeOfCreate().toInstant().isAfter(task.getTimeOfExpired().toInstant())) {
             log.debug("неверно введенное время");
             return HttpStatus.BAD_REQUEST;
         }
@@ -57,6 +54,11 @@ public class TaskService {
         Task originalTask = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("task not found"));
         updatedTask.setId(originalTask.getId());
         taskRepository.save(updatedTask);
+    }
+
+    public Task getTask(int id){
+        Task task = taskRepository.findById(id).orElseThrow(()-> new ApiRequestException("задание не найдено"));
+        return task;
     }
 
 

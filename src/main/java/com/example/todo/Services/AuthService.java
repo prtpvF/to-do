@@ -1,5 +1,6 @@
 package com.example.todo.Services;
 
+import com.example.todo.Exception.ApiRequestException;
 import com.example.todo.Model.Person;
 import com.example.todo.dtos.JwtRequest;
 import com.example.todo.dtos.JwtResponse;
@@ -43,7 +44,7 @@ public class AuthService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         }catch (BadCredentialsException e){
-            return  new ResponseEntity<>(new AppError(HttpStatus.UNAUTHORIZED.value(), "некоректный логин или пароль"), HttpStatus.UNAUTHORIZED);
+            throw new ApiRequestException("неверный логин или пароль");
         }
         UserDetails userDetails = personService.loadUserByUsername(authRequest.getUsername());
         String token = jwtTokenUtils.generateToken(userDetails);
