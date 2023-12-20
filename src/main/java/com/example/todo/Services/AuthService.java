@@ -9,7 +9,6 @@ import com.example.todo.dtos.UserDto;
 import com.example.todo.exceptions.AppError;
 import com.example.todo.util.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,18 +29,13 @@ public class AuthService {
 
     public ResponseEntity<?> createNewUser(@RequestBody RegistrationPersonDto registrationPersonDto) {
         if (!registrationPersonDto.getPassword().equals(registrationPersonDto.getConfirmPassword())) {
-            throw new IllegalArgumentException("пароли не совпадают");
+            return new ResponseEntity<>(new AppError(HttpStatus.UNAUTHORIZED.value(), "пароли не совпадают"), HttpStatus.UNAUTHORIZED);
         }
         if (personService.findByUsername(registrationPersonDto.getUsername()).isPresent()) {
-            throw new DataIntegrityViolationException("Пользователь с указанным именнем уже существует");
-        }
-        if(personService.findByUsername(registrationPersonDto.getEmail()).isPresent()){
-            throw new DataIntegrityViolationException("Адресс этой почты уже занят");
+            return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "Пользователь с указанным именнем уже существует"), HttpStatus.BAD_REQUEST);
         }
 
-        Person person = personService.createNewUser(registrationPersonDto);
-
-
+        Person person =  personService.createNewUser(registrationPersonDto);
         return ResponseEntity.ok(new UserDto(person.getId(), person.getUsername(),person.getEmail()));
     }
 

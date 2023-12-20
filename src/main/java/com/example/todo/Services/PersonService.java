@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManagerFactory;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,6 +25,12 @@ public class PersonService implements UserDetailsService {
     private final  PersonRepository personRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
+
+
+
+
+
+
 
 
     public Optional<Person> findByUsername(String username){
@@ -40,14 +45,12 @@ public class PersonService implements UserDetailsService {
         return new User(person.getUsername(), person.getPassword(), person.getRoles().stream().map(role->new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList()));
     }
 
-    //todo
     public Person createNewUser(RegistrationPersonDto registrationUserDto){
         Person person = new Person();
         person.setEmail(registrationUserDto.getEmail());
         person.setUsername(registrationUserDto.getUsername());
         person.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
         person.setRoles(List.of(roleService.getUserRole()));
-        person.setProductivity(0);
         return personRepository.save(person);
 
     }
