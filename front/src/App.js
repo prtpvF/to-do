@@ -7,6 +7,7 @@ import AddUser from "./users/AddUser";
 import Login from './pages/Login';
 import AddTask from "./tasks/AddTask";
 import ViewAllTasks from "./tasks/ViewAllTasks";
+import Registration from "./pages/Registration";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                 <Route exact path="/login" element={<Login />} />
                 <Route exact path="/add/task" element={<AddTask/>}/>
                 <Route exact path="/view/all/tasks" element={<ViewAllTasks/>}/>
+                <Route exact path="/registration" element={<Registration/>}/>
             </Routes>
         </Router>
 
