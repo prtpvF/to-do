@@ -1,16 +1,13 @@
 package com.example.todo.Model;
 
-
-
-
-
-
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 
 
 @Entity
@@ -27,6 +24,7 @@ public class Person {
     private String password;
 
     @Column(name = "email")
+    @Email
     private String email;
 
     @ManyToMany
@@ -40,8 +38,18 @@ public class Person {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "owner")
     private List<Task> tasks = new ArrayList<>();
 
+    @Column(name = "productivity")
+    @JsonIgnore
+    private long productivity;
 
 
+    public long getProductivity() {
+        return productivity;
+    }
+
+    public void setProductivity(long productivity) {
+        this.productivity = productivity;
+    }
 
     public int getId() {
         return id;
