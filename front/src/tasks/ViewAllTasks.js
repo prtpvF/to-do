@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ViewTask from "./ViewTask";
+import {Link} from "react-router-dom";
 
 export default function ViewAllTasks(){
     const [tasks, setTasks] = useState([]);
@@ -34,12 +36,17 @@ export default function ViewAllTasks(){
                     let date = new Date(task.timeOfExpired);
                     let formattedDate = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
                     let time = date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0');
+
                     return (
                         <tr key={index}>
                             <td>{task.name}</td>
                             <td>{task.description}</td>
                             <td>{formattedDate+' '+ time}</td>
+
+                            <Link to={`/view/task/${task.id}`}>View Task</Link>
+
                         </tr>
+
                     );
                 })}
                 </tbody>
