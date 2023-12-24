@@ -14,6 +14,10 @@ import java.util.Optional;
 public class MessageSender {
     private final EmailSenderServices senderServices;
 
+    public void send(Person person, String subject, String body){
+        senderServices.sendEmail(person.getEmail(),subject,body);
+    }
+
     public void sendMessageAboutTask(Optional<Person> person, Task task){
         senderServices.sendEmail(person.get().getEmail(), "добавление", "уважаемый пользвоатель, задача была успешно добавлена! " +
                 "На ваш счет добвалено 10 очков автивности");
@@ -25,8 +29,11 @@ public class MessageSender {
         long remainingTime = duration.toMinutes();
         String body = "До окончания задания: " + task.getName() + "осталось: " + remainingTime + " минут. " +
                 "Вы уже выполнили его?";
+        send(person, "напоминание", body);
+    }
 
-        senderServices.sendEmail(person.getEmail(), "напоминание", body);
-
+    public void sendAChangeTaskMessage(Person person, Task task){
+        String body = "Уважаемый, " + person.getUsername() + ", вы только что изменили свою задачу!";
+        send(person, "напоминание", body);
     }
 }

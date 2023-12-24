@@ -32,9 +32,15 @@ public class TaskController {
         return HttpStatus.OK;
     }
 
-    @PostMapping
-    public HttpStatus editTask( @RequestBody int id, @RequestBody Task task){
+    @PostMapping("/edit/{id}")
+    public HttpStatus editTask( @PathVariable int id, @RequestBody Task task){
         taskService.changeTask(task,id);
         return HttpStatus.OK;
+    }
+
+    @GetMapping("/get/{id}")
+    public Task getTask(@PathVariable int id){
+        return  taskService.getTask(id);
+
     }
 }

@@ -17,7 +17,6 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @JsonIgnore
     private int id;
     @Column(name = "name")
     private String name;
@@ -35,8 +34,7 @@ public class Task {
     @Column(name = "time_of_expire")
     public Timestamp timeOfExpired;
 
-
-
-
-
+    public int getId() {
+        return id;
+    }
 }

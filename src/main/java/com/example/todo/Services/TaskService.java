@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -30,13 +31,17 @@ public class TaskService {
     }
 
 
-    public HttpStatus addTask(Principal principal, Task task) {
+    public Timestamp getCurrentTime(){
         Timestamp now = new Timestamp(System.currentTimeMillis());
+        return now;
+    }
+
+    public HttpStatus addTask(Principal principal, Task task) {
         Optional<Person> person = personService.findByUsername(principal.getName());
         person.get().setTasks(List.of(task));
 
         task.setOwner(person.get());
-        task.setTimeOfCreate(now);
+        task.setTimeOfCreate(getCurrentTime());
 
         if (task.getTimeOfCreate().toInstant().isAfter(task.getTimeOfExpired().toInstant())) {
             log.debug("неверно введенное время");
@@ -44,6 +49,7 @@ public class TaskService {
         }
             sender.sendMessageAboutTask(person,task);
         person.get().setProductivity(person.get().getProductivity()+10);
+        taskRepository.save(task);
         return HttpStatus.OK;
 
     }
@@ -52,13 +58,16 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-        //todo
+
     public void changeTask(Task updatedTask, int id) {
         Task originalTask = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("task not found"));
         updatedTask.setId(originalTask.getId());
+        updatedTask.setOwner(originalTask.getOwner());
+        updatedTask.setTimeOfCreate(getCurrentTime());
+        sender.sendAChangeTaskMessage(originalTask.getOwner(), updatedTask);
         taskRepository.save(updatedTask);
     }
-        //todo
+
     public Task getTask(int id){
         Task task = taskRepository.findById(id).orElseThrow(()-> new ApiRequestException("задание не найдено"));
         return task;

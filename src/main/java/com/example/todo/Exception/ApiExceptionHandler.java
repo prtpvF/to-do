@@ -36,6 +36,13 @@ public class ApiExceptionHandler {
         ApiException apiException = new ApiException(e.getMessage(),e, unauthorized, ZonedDateTime.now(ZoneId.of("Z")));
         return  new ResponseEntity<>(apiException,unauthorized);
     }
+    @ExceptionHandler(value = {NullPointerException.class})
+    public ResponseEntity<Object> handleCannotFindUserByPrincipal(NullPointerException e){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        System.out.println("какашки");
+        ApiException apiException = new ApiException(e.getMessage(),e,status,ZonedDateTime.now(ZoneId.of("Z")));
+        return new ResponseEntity<>(apiException,status);
+    }
 
 
 
