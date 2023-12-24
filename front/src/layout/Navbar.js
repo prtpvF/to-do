@@ -14,7 +14,7 @@ export default function Navbar() {
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <Link className="btn btn-outline-light" to="/adduser">Add user</Link>
+                    <Link className="btn btn-outline-light" to="/registration">Add user</Link>
                 </div>
             </nav>
         </div>

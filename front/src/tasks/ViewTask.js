@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import axios from 'axios';
 
 export default function ViewTask() {
@@ -30,7 +30,7 @@ export default function ViewTask() {
             <h1>Task Details</h1>
             <p><strong>Name:</strong> {task.name}</p>
             <p><strong>Description:</strong> {task.description}</p>
-            {/* Отображение других деталей задания */}
+            <Link to={`/edit/task/${task.id}`}>Edit Task</Link>
         </div>
     );
 };

@@ -9,6 +9,7 @@ import AddTask from "./tasks/AddTask";
 import ViewAllTasks from "./tasks/ViewAllTasks";
 import Registration from "./pages/Registration";
 import ViewTask from "./tasks/ViewTask";
+import EditTask from "./tasks/EditTask";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
                 <Route exact path="/view/all/tasks" element={<ViewAllTasks/>}/>
                 <Route exact path="/registration" element={<Registration/>}/>
                 <Route exact path="/view/task/:id" element={<ViewTask/>}/>
+                <Route exact path="/edit/task/:id" element={<EditTask/>}/>
             </Routes>
         </Router>
 
