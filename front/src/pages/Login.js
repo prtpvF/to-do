@@ -5,6 +5,7 @@ export default function Login(){
 
         const [username, setUsername] = useState('');
         const [password, setPassword] = useState('');
+        const [errorMessage, setErrorMessage] = useState(null);
 
         const handleLogin = async () => {
             try {
@@ -24,7 +25,8 @@ export default function Login(){
                 console.log('JWT Token:', token);
                 alert('JWT Token has been stored in the cookie!');
             } catch (error) {
-                console.error('Error:', error);
+                setErrorMessage(error.response.data.message);
+
             }
         };
 
@@ -40,6 +42,7 @@ export default function Login(){
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <button onClick={handleLogin}>Login</button>
+                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             </div>
         );
 }

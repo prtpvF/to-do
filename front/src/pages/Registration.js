@@ -25,7 +25,7 @@ export default function Registration(){
     return (
         <div>
             <h2>Registration</h2>
-            {errorMessage && <p>{errorMessage}</p>}
+
             <form onSubmit={registration}>
                 <div>
                     <label>Username:</label>
@@ -45,6 +45,7 @@ export default function Registration(){
                 </div>
                 <button type="submit">Register</button>
             </form>
+            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         </div>
     )
 }
